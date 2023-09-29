@@ -1,0 +1,1 @@
+sudo st2 run core.remote cmd="/home/bao_net_mon/nw_clogin.sh -noenable -u svc_nucleus_netstk -p wqSz3F4#d8 -c 'show version' $device_ip"  
