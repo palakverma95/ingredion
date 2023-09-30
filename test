@@ -81,6 +81,8 @@ interact
 
 wrong # args: should be "foreach varList list ?varList list ...? command"
 
+ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc enduser@10.255.252.1
+
 
 
 
