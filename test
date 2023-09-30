@@ -21,6 +21,7 @@ class AddIPtoDevice(BaseAction):
         #command = 'help'
         ip_address=b''
         ip_address=ci_address
+
         execute_command = subprocess.Popen([script_name, script_options, '-u', username, '-p', password, '-c', cmd, ci_address], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         command_output = execute_command.stdout.readlines()
         print(command_output)
@@ -62,6 +63,21 @@ parameters:
     description: "command to check the cpu utlization"
     required: true
 
+#!/usr/bin/expect
+
+set timeout 20
+spawn ssh svc_nucleus_netstk@10.55.81.1
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" {
+            send "wqSz3F4#d8\r"
+            }
+        } "*?assword" {
+                send "wqSz3F4#d8/\r"
+       }
+
+expect "#" { send "show version\r" }
+interact
 
 
 
