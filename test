@@ -85,7 +85,24 @@ ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc enduser@172.21.50.12
 
  ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc svc_nucleus_netstk@172.21.50.128
 
-
+conf t
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ ING_ISE
+ server name 10.16.5.250
+ server name 10.16.5.206
+exit
+!
+tacacs-server host 10.16.5.250 key Zr4u7xlA1D
+tacacs-server host 10.16.5.206 key Zr4u7xlA1D
+!
+ip name-server 10.16.5.30
+ip name-server 10.16.5.38
+!
+wr mem
+exit
 
 
 
