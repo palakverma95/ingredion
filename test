@@ -79,6 +79,7 @@ expect "yes/no" {
 expect "#" { send "show version\r" }
 interact
 
+wrong # args: should be "foreach varList list ?varList list ...? command"
 
 
 
