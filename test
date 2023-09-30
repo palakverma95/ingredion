@@ -1,1 +1,83 @@
 sudo st2 run core.remote cmd="/home/bao_net_mon/nw_clogin.sh -noenable -u svc_nucleus_netstk -p wqSz3F4#d8 -c 'show version' $device_ip"  
+
+#!/usr/bin/env python
+from lib.base_action import BaseAction
+import subprocess
+import re
+import os
+
+class AddIPtoDevice(BaseAction):
+    def __init__(self, config):
+        """Creates a new Action given a StackStorm config object (kwargs works too)
+        :param config: StackStorm configuration object for the pack
+        :returns: a new Action
+        """
+        super(AddIPtoDevice, self).__init__(config)
+
+    def add_ip_to_device(self, username, password, ci_address, cmd):
+        login_output = []
+        script_name = "/opt/stackstorm/packs/ntt_monitoring/actions/nw_clogin.sh"
+        script_options = '-noenable'
+        #command = 'help'
+        ip_address=b''
+        ip_address=ci_address
+        execute_command = subprocess.Popen([script_name, script_options, '-u', username, '-p', password, '-c', cmd, ci_address], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        command_output = execute_command.stdout.readlines()
+        print(command_output)
+        
+    
+        
+
+
+    def run(self, username, password, ci_address, cpu_command):
+        ipadd_status = self.add_ip_to_device(username, password, ci_address, cpu_command
+        return ipadd_status
+  
+
+
+---
+name: "add_ip_to_device"
+pack: "ntt_monitoring"
+description: "To check the connectivity status to the remote network device"
+runner_type: "python-script"
+entry_point:  add_ip_to_device.py
+enabled: true
+parameters:
+  username:
+    type: string
+    description: "Username to login to the remote server"
+    required: true
+    default: "bao_net_mon"
+  password:
+    type: string
+    description: "Password to login to the remote server"
+    required: true
+    default: "JJjj1003"
+  ci_address:
+    type: string
+    description: "ci_address of the remote server"
+    required: true
+  cmd:
+    type: string
+    description: "command to check the cpu utlization"
+    required: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
