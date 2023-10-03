@@ -149,6 +149,26 @@ expect "#" { send "wr\r" }
 expect "#" { send "exit\r" }
 expect "#" { send "!\r" }
 
+-------------phase 2------------------
+conf t
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ ING_ISE
+ server name 10.16.5.250
+ server name 10.16.5.206
+exit
+!
+tacacs-server host 10.16.5.250 key Zr4u7xlA1D
+tacacs-server host 10.16.5.206 key Zr4u7xlA1D
+!
+ip name-server 10.16.5.30
+ip name-server 10.16.5.38
+!
+exit
+wr mem
+exit
 
 
 
