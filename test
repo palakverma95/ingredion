@@ -104,6 +104,31 @@ ip name-server 10.16.5.38
 wr mem
 exit
 
+#!/usr/bin/expect
+
+set timeout 20
+foreach arg $argv {
+spawn ssh username@$arg -b 10.108.1.35
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" {
+            send "password\r"
+            }
+        } "*?assword" {
+                send "password/\r"
+       }
+
+expect "#" { send "show version\r" }
+
+}
+
+#!/bin/bash
+
+array_data=(10.55.81.1)
+for (( i=0; i<${#array_data[@]}; i++ ))
+do
+    expect add_ip_to_device_phase1.expect "${array_data[$i]}"
+done
 
 
 
