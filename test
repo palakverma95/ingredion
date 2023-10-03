@@ -130,7 +130,24 @@ do
     expect add_ip_to_device_phase1.expect "${array_data[$i]}"
 done
 
-
+--------phase1--------------------------
+expect "#" { send "conf t\r" }
+expect "(config)#" { send "!\r" }
+expect ")#" { send "aaa new-model\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "!\r" }
+expect "#" { send "aaa group server tacacs+ ING_ISE\r" }
+expect "#" { send "server-private 10.16.5.250 key Zr4u7xlA1D\r" }
+expect "#" { send "server-private 10.16.5.206 key Zr4u7xlA1\r" }
+expect "#" { send "exit\r" }
+expect "#" { send "!\r" }
+expect "#" { send "ip name-server 10.16.5.30\r" }
+expect "#" { send "ip name-server 10.16.5.38\r" }
+expect "#" { send "!\r" }
+expect "#" { send "exit\r" }
+expect "#" { send "wr\r" }
+expect "#" { send "exit\r" }
+expect "#" { send "!\r" }
 
 
 
