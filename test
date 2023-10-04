@@ -355,7 +355,34 @@ fi
 
 ------------------------phase2 commands---------------------------
 
+Phase 2
 
+conf t
+!
+aaa new-model
+!
+!
+aaa group server tacacs+ ING_ISE
+ server name 10.16.5.250
+ server name 10.16.5.206
+!
+! if above two server name commands do not work try ones below
+! server-private 10.16.5.250 key Zr4u7xlA1D
+! server-private 10.16.5.206 key Zr4u7xlA1D
+! server 10.16.5.250
+! server 10.16.5.206
+!
+exit
+!
+tacacs-server host 10.16.5.250 key Zr4u7xlA1D
+tacacs-server host 10.16.5.206 key Zr4u7xlA1D
+!
+ip name-server 10.16.5.30
+ip name-server 10.16.5.38
+!
+exit
+wr mem
+exit
 
 
 
