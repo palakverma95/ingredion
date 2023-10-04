@@ -320,6 +320,38 @@ expect "#" { send "!\r" }
 interact
 }
 [root@uschisnuc06 actions]#
+-------------phase2 with if-----------------
+#!/usr/bin/expect
+
+set password "wqSz3F4#d8"
+set timeout 20
+foreach arg $argv {
+spawn ssh svc_nucleus_netstk@$arg
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" {
+            send "$password\r"
+            }
+        } "*?assword" {
+                send "$password\r"
+       }
+
+expect "#" { send "conf t\r" }
+expect "(config)#" { send "!\r" }
+expect ")#" { send "aaa new-model\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "aaa group server tacacs+ ING_ISE\r" }
+expect ")#" { send "server name 10.16.5.250\r" }
+if [ expect "*Invalid*" ];
+        then 
+		  expect ")#" { send "server-private 10.16.5.250 key Zr4u7xlA1D\r" }
+		  expect ")#" { send "server-private 10.16.5.206 key Zr4u7xlA1\r" }
+		
+else 
+   expect ")#" { send "server name 10.16.5.206\r" }
+fi
+}
 
 
 
