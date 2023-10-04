@@ -84,7 +84,7 @@ wrong # args: should be "foreach varList list ?varList list ...? command"
 ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc enduser@172.21.50.128
 
  ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc svc_nucleus_netstk@172.21.50.128
-
+wqSz3F4#d8
 conf t
 !
 aaa new-model
