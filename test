@@ -170,6 +170,157 @@ exit
 wr mem
 exit
 
+----------------------Phase2 script-----------------------------
+*                        --- WARNING ---                        *
+*       THIS DEVICE IS FOR Ingredion OFFICIAL USE ONLY.       *
+ *  Unauthorized access to and/or use of this system    *
+*  is a violation of law and is punishable under provisions of  *
+*  18 USC 1029, 18 USC 1030, and applicable statutes.  Use of   *
+*  this system constitutes consent to security testing and      *
+*  monitoring.                                                  *
+*****************************************************************
+Password:
+
+DEHAM2SWT05_ByProducts#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+DEHAM2SWT05_ByProduc(config)#!
+DEHAM2SWT05_ByProduc(config)#aaa new-model
+DEHAM2SWT05_ByProduc(config)#!
+DEHAM2SWT05_ByProduc(config)#!
+DEHAM2SWT05_ByProduc(config)#aaa group server tacacs+ ING_ISE
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#!
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#server-private 10.16.5.250 key Zr4u7xlA1D
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#!
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#!
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#server-private 10.16.5.206 key Zr4u7xlA1D
+DEHAM2SWT05_ByProduc(config-sg-tacacs+)#exit
+DEHAM2SWT05_ByProduc(config)#!
+DEHAM2SWT05_ByProduc(config)#ip name-server 10.16.5.30
+DEHAM2SWT05_ByProduc(config)#ip name-server 10.16.5.38
+DEHAM2SWT05_ByProduc(config)#!
+DEHAM2SWT05_ByProduc(config)#exit
+DEHAM2SWT05_ByProducts#exit
+Connection to 10.120.10.26 closed by remote host.
+Connection to 10.120.10.26 closed.
+[root@uschisnuc06 actions]# clear
+[root@uschisnuc06 actions]# rm -rf new_ip.txt
+[root@uschisnuc06 actions]# vim process_new_ip.sh
+[root@uschisnuc06 actions]# vim add_ip_to_device_phase2.expect
+[root@uschisnuc06 actions]# st2 key get network.username
++------------------+--------------------+
+| Property         | Value              |
++------------------+--------------------+
+| name             | network.username   |
+| value            | svc_nucleus_netstk |
+| secret           | False              |
+| encrypted        | False              |
+| scope            | st2kv.system       |
+| expire_timestamp |                    |
++------------------+--------------------+
+[root@uschisnuc06 actions]# ^C
+[root@uschisnuc06 actions]# ^C
+[root@uschisnuc06 actions]#
+[root@uschisnuc06 actions]# ^C
+[root@uschisnuc06 actions]# st2 key get network.password -d
++------------------+------------------+
+| Property         | Value            |
++------------------+------------------+
+| name             | network.password |
+| value            | wqSz3F4#d8       |
+| secret           | True             |
+| encrypted        | False            |
+| scope            | st2kv.system     |
+| expire_timestamp |                  |
++------------------+------------------+
+[root@uschisnuc06 actions]# ^C
+[root@uschisnuc06 actions]# ssh -oKexAlgorithms=+diffie-hellman-group1-sha1 -c 3des-cbc svc_nucleus_netstk@172.21.50.128
+Password:
+CCC
+*****************************************************************
+*                        --- WARNING ---                        *
+* THIS COMPUTER IS FOR Corn Products International OFFICIAL     *
+* USE ONLY. Use of this system constitutes consent to security  *
+* testing and monitoring.                                       *
+*****************************************************************
+
+Arg_A_Rm20#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Arg_A_Rm20(config)#~!
+                   ^
+% Invalid input detected at '^' marker.
+
+Arg_A_Rm20(config)#!
+Arg_A_Rm20(config)#aaa new model
+                           ^
+% Invalid input detected at '^' marker.
+
+Arg_A_Rm20(config)#aaa new model
+Arg_A_Rm20#aaa new-model
+            ^
+% Invalid input detected at '^' marker.
+
+Arg_A_Rm20#clear
+% Type "clear ?" for a list of subcommands
+Arg_A_Rm20#cls
+Translating "cls"
+% Unknown command or computer name, or unable to find computer address
+Arg_A_Rm20#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Arg_A_Rm20(config)#!
+Arg_A_Rm20(config)#aaa new-model
+Arg_A_Rm20(config)#!
+Arg_A_Rm20(config)#aaa group server tacacs+ ING_ISE
+Arg_A_Rm20(config-sg-tacacs+)#server name 10.16.5.250
+Translating "name"
+                                     ^
+% Invalid input detected at '^' marker.
+
+Arg_A_Rm20(config-sg-tacacs+)#server-private 10.16.5.250 key Zr4u7xlA1D
+Arg_A_Rm20(config-sg-tacacs+)#server-private 10.16.5.206 key Zr4u7xlA1
+Arg_A_Rm20(config-sg-tacacs+)#server-private 10.16.5.206 key Zr4u7xlA1D
+Arg_A_Rm20(config-sg-tacacs+)#server 10.16.5.250
+Arg_A_Rm20(config-sg-tacacs+)#exit
+Arg_A_Rm20(config)#exit
+Arg_A_Rm20#exit
+Connection to 172.21.50.128 closed.
+[root@uschisnuc06 actions]# vim add_ip_to_device_phase2.expect
+[root@uschisnuc06 actions]# cat add_ip_to_device_phase2.expect
+#!/usr/bin/expect
+
+set password "wqSz3F4#d8"
+set timeout 20
+foreach arg $argv {
+spawn ssh svc_nucleus_netstk@$arg
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" {
+            send "$password\r"
+            }
+        } "*?assword" {
+                send "$password\r"
+       }
+
+expect "#" { send "conf t\r" }
+expect "(config)#" { send "!\r" }
+expect ")#" { send "aaa new-model\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "aaa group server tacacs+ ING_ISE\r" }
+expect "(config-sg-tacacs)#" { send "server-private 10.16.5.250 key Zr4u7xlA1D\r" }
+expect ")#" { send "server-private 10.16.5.206 key Zr4u7xlA1\r" }
+expect ")#" { send "exit\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "ip name-server 10.16.5.30\r" }
+expect ")#" { send "ip name-server 10.16.5.38\r" }
+expect ")#" { send "!\r" }
+expect ")#" { send "exit\r" }
+expect "#" { send "wr\r" }
+expect "#" { send "exit\r" }
+expect "#" { send "!\r" }
+interact
+}
+[root@uschisnuc06 actions]#
+
 
 
 
